@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Soothing Bar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='images/logo.jfif') }}" alt="SoapySoap Logo">
+        <h1>Create an Account at Soothing Bar</h1>
+    </header>
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('products') }}">Products</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('signup') }}">Sign Up</a>
+        <a href="{{ url_for('login') }}">Log In</a>
+    </nav>
+    <div class="container">
+        <form action="{{ url_for('signup') }}" method="POST">
+            <input type="text" name="username" placeholder="Username" required><br>
+            <input type="email" name="email" placeholder="Email" required><br>
+            <input type="password" name="password" placeholder="Password" required><br>
+            <input type="password" name="confirm_password" placeholder="Confirm Password" required><br>
+            <button type="submit">Sign Up</button>
+        </form>
+        <p>Already have an account? <a href="{{ url_for('login') }}">Log In here</a></p>
+    </div>
+    <footer>
+        <p>&copy; 2025 Soothing Bar Shop. All rights reserved.</p>
+    </footer>
+</body>
+</html>
