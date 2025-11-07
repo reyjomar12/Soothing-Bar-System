@@ -3,42 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products - SoapySoap</title>
+    <title>Products - Soothing Bar</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <header>
-        <img src="{{ url_for('static', filename='images/logo.jfif') }}" alt="SoapySoap Logo">
+        <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Soothing Bar Logo">
         <h1>Our Best Seller!</h1>
     </header>
     <nav>
-        <a href="{{ url_for('home') }}">Home</a>
-        <a href="{{ url_for('products') }}">Products</a>
-        <a href="{{ url_for('contact') }}">Contact</a>
-        <a href="{{ url_for('signup') }}">Sign Up</a>
-        <a href="{{ url_for('login') }}">Log In</a>
+        <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
+        <a href="{{ url_for('products') }}"><i class="fas fa-shopping-bag"></i> Products</a>
+        <a href="{{ url_for('contact') }}"><i class="fas fa-envelope"></i> Contact</a>
+        <a href="{{ url_for('view_cart') }}"><i class="fas fa-shopping-cart"></i> Cart ({{ cart_count }})</a>
+        {% if session.user_logged_in or session.admin_logged_in %}
+            <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout ({{ session.username }})</a>
+        {% else %}
+            <a href="{{ url_for('signup') }}"><i class="fas fa-user-plus"></i> Sign Up</a>
+            <a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Log In</a>
+        {% endif %}
     </nav>
     <div class="container">
+        {% for product_id, product in products.items() %}
         <div class="product">
-            <img src="{{ url_for('static', filename='images/malunggay.jpg') }}" alt="Malunggay Soap" style="width:100%; height:auto;">
-            <h3>Malunggay Soap</h3>
-            <p>₱10.00</p>
+            <a href="{{ url_for('product_detail', product_id=product_id) }}" style="text-decoration: none; color: inherit;">
+                <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="{{ product.name }}" style="width:100%; height:auto; cursor: pointer;">
+                <h3>{{ product.name }}</h3>
+                <p>₱{{ "%.2f"|format(product.price) }}</p>
+            </a>
+            <div style="display: flex; gap: 10px; padding: 0 20px 20px 20px;">
+                <a href="{{ url_for('product_detail', product_id=product_id) }}" style="flex: 1; text-decoration: none;">
+                    <button style="width: 100%; margin-bottom: 0;"><i class="fas fa-eye"></i> View</button>
+                </a>
+                <form action="{{ url_for('add_to_cart_route', product_id=product_id) }}" method="POST" style="flex: 1;">
+                    <button type="submit" style="width: 100%; margin-bottom: 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <i class="fas fa-cart-plus"></i> Add
+                    </button>
+                </form>
+            </div>
         </div>
-        <div class="product">
-            <img src="{{ url_for('static', filename='images/soapy.jpg') }}" alt="Soapy Soap" style="width:100%; height:auto;">
-            <h3>Soapy Soap</h3>
-            <p>₱15.00</p>
-        </div>
-        <div class="product">
-            <img src="{{ url_for('static', filename='images/lavander.jpg') }}" alt="Lavender Bliss Soap" style="width:100%; height:auto;">
-            <h3>Lavender Bliss</h3>
-            <p>₱20.00</p>
-        </div>
-        <div class="product">
-            <img src="{{ url_for('static', filename='images/honey.jpg') }}" alt="Honey Almond Soap" style="width:100%; height:auto;">
-            <h3>Honey Almond</h3>
-            <p>₱25.00</p>
-        </div>
+        {% endfor %}
     </div>
     <footer>
         <p>&copy; 2025 Soothing Bar Shop. All rights reserved.</p>

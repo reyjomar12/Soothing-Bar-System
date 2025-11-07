@@ -3,24 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SoapySoap</title>
+    <title>Soothing Bar - Handmade Natural Soaps</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <header>
-        <img src="{{ url_for('static', filename='images/logo.jfif') }}" alt="SoapySoap Logo">
+        <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Soothing Bar Logo">
         <h1>Welcome to Soothing Bar</h1>
     </header>
     <nav>
-        <a href="{{ url_for('home') }}">Home</a>
-        <a href="{{ url_for('products') }}">Products</a>
-        <a href="{{ url_for('contact') }}">Contact</a>
-        <a href="{{ url_for('signup') }}">Sign Up</a>
-        <a href="{{ url_for('login') }}">Log In</a>
+        <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
+        <a href="{{ url_for('products') }}"><i class="fas fa-shopping-bag"></i> Products</a>
+        <a href="{{ url_for('contact') }}"><i class="fas fa-envelope"></i> Contact</a>
+        <a href="{{ url_for('view_cart') }}"><i class="fas fa-shopping-cart"></i> Cart ({{ cart_count }})</a>
+        {% if session.user_logged_in or session.admin_logged_in %}
+            <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout ({{ session.username }})</a>
+        {% else %}
+            <a href="{{ url_for('signup') }}"><i class="fas fa-user-plus"></i> Sign Up</a>
+            <a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Log In</a>
+        {% endif %}
     </nav>
     <div class="container">
-        <h2>About Our Soap</h2>
-        <p>We offer the best handmade soaps for all skin types.</p>
+        <!-- Hero Section -->
+        <div class="hero-section" style="background: linear-gradient(135deg, rgba(255,154,158,0.1) 0%, rgba(254,207,239,0.1) 100%); padding: 60px 30px; border-radius: 20px; margin-bottom: 60px;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px; color: #2c3e50;">
+                <i class="fas fa-spa" style="color: #ff9a9e;"></i> Natural Handmade Soaps
+            </h2>
+            <p style="font-size: 1.2rem; color: #555; max-width: 700px; margin: 0 auto 30px;">
+                Discover our premium collection of handcrafted soaps made with natural ingredients. 
+                Perfect for all skin types, our soaps are gentle, moisturizing, and environmentally friendly.
+            </p>
+            <a href="{{ url_for('products') }}" style="display: inline-block; margin-top: 20px;">
+                <button style="font-size: 18px; padding: 15px 40px;">
+                    <i class="fas fa-shopping-bag"></i> Shop Now
+                </button>
+            </a>
+        </div>
+
+        <!-- Features Section -->
+        <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 30px; margin-bottom: 60px;">
+            <div class="card" style="flex: 1; min-width: 250px; max-width: 300px;">
+                <i class="fas fa-leaf" style="font-size: 3rem; color: #27ae60; margin-bottom: 20px;"></i>
+                <h3>100% Natural</h3>
+                <p>Made with pure, organic ingredients. No harsh chemicals or artificial additives.</p>
+            </div>
+            <div class="card" style="flex: 1; min-width: 250px; max-width: 300px;">
+                <i class="fas fa-heart" style="font-size: 3rem; color: #ff9a9e; margin-bottom: 20px;"></i>
+                <h3>Handcrafted with Love</h3>
+                <p>Each soap is carefully handcrafted to ensure quality and attention to detail.</p>
+            </div>
+            <div class="card" style="flex: 1; min-width: 250px; max-width: 300px;">
+                <i class="fas fa-shield-alt" style="font-size: 3rem; color: #3498db; margin-bottom: 20px;"></i>
+                <h3>Safe for All Skin</h3>
+                <p>Gentle formulas suitable for sensitive skin, including babies and children.</p>
+            </div>
+        </div>
+
+        <!-- Featured Products Preview -->
+        <div style="margin-top: 60px;">
+            <h2 style="margin-bottom: 40px;">
+                <i class="fas fa-star" style="color: #ffd700;"></i> Featured Products
+            </h2>
+            <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px;">
+                {% set count = 0 %}
+                {% for product_id, product in products.items() %}
+                    {% if count < 3 %}
+                    <div class="product" style="cursor: pointer;" onclick="window.location='{{ url_for('product_detail', product_id=product_id) }}'">
+                        <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="{{ product.name }}">
+                        <h3>{{ product.name }}</h3>
+                        <p>₱{{ "%.2f"|format(product.price) }}</p>
+                        <button style="margin-bottom: 20px;">
+                            <i class="fas fa-eye"></i> View Details
+                        </button>
+                    </div>
+                    {% set count = count + 1 %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <a href="{{ url_for('products') }}" style="display: inline-block; margin-top: 30px; color: #ff9a9e; text-decoration: none; font-weight: 600;">
+                View All Products <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
     </div>
     <footer>
         <p>&copy; 2025 Soothing Bar Shop. All rights reserved.</p>

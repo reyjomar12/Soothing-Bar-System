@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Soothing Bar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .stat-card {
+            flex: 1;
+            min-width: 200px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .stat-card h3 {
+            margin: 0;
+            color: #b58a65;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        .stat-card p {
+            margin: 10px 0 0 0;
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+        }
+        .orders-table {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        th {
+            background: #f5f5f5;
+            font-weight: bold;
+            color: #b58a65;
+        }
+        tr:hover {
+            background: #f9f9f9;
+        }
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .status-processing {
+            background: #cfe2ff;
+            color: #084298;
+        }
+        .status-shipped {
+            background: #d1e7dd;
+            color: #0f5132;
+        }
+        .status-delivered {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .btn-update {
+            background: #b58a65;
+            color: white;
+        }
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+        .btn-logout {
+            background: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .no-orders {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        .order-form {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Soothing Bar Logo">
+        <h1>Admin Dashboard</h1>
+    </header>
+    <nav>
+        <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
+        <a href="{{ url_for('products') }}"><i class="fas fa-shopping-bag"></i> Products</a>
+        <a href="{{ url_for('contact') }}"><i class="fas fa-envelope"></i> Contact</a>
+        <a href="{{ url_for('logout') }}" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav>
+    <div class="container">
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <h2 style="margin: 0; color: #b58a65;">Order Management</h2>
+                <a href="{{ url_for('home') }}" style="color: #b58a65; text-decoration: none;">← Back to Site</a>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>Total Orders</h3>
+                    <p>{{ orders|length }}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Pending</h3>
+                    <p>
+                        {% set pending_count = 0 %}
+                        {% for order in orders %}
+                            {% if (order.status|default('Pending')) == 'Pending' %}
+                                {% set pending_count = pending_count + 1 %}
+                            {% endif %}
+                        {% endfor %}
+                        {{ pending_count }}
+                    </p>
+                </div>
+                <div class="stat-card">
+                    <h3>Processing</h3>
+                    <p>
+                        {% set processing_count = 0 %}
+                        {% for order in orders %}
+                            {% if (order.status|default('Pending')) == 'Processing' %}
+                                {% set processing_count = processing_count + 1 %}
+                            {% endif %}
+                        {% endfor %}
+                        {{ processing_count }}
+                    </p>
+                </div>
+                <div class="stat-card">
+                    <h3>Delivered</h3>
+                    <p>
+                        {% set delivered_count = 0 %}
+                        {% for order in orders %}
+                            {% if (order.status|default('Pending')) == 'Delivered' %}
+                                {% set delivered_count = delivered_count + 1 %}
+                            {% endif %}
+                        {% endfor %}
+                        {{ delivered_count }}
+                    </p>
+                </div>
+            </div>
+            
+            <div class="orders-table">
+                {% if orders is not none %}
+                    {% if orders|length > 0 %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Date</th>
+                                <th>Customer</th>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Payment</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            <tr>
+                                <td><strong>{{ order.order_id|default('N/A') }}</strong></td>
+                                <td>{{ order.order_date|default('N/A') }}</td>
+                                <td>
+                                    <strong>{{ order.customer_name|default('N/A') }}</strong><br>
+                                    <small>{{ order.email|default('N/A') }}</small><br>
+                                    <small>{{ order.phone|default('N/A') }}</small>
+                                </td>
+                            <td>
+                                {% set order_items = order.get('items', []) %}
+                                {% if order_items %}
+                                    {# New format: Multiple items #}
+                                    <div style="max-width: 200px;">
+                                        {% for item in order_items %}
+                                            <div style="margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid #eee;">
+                                                <strong>{{ item.product_name|default('Unknown') }}</strong><br>
+                                                <small>Qty: {{ item.quantity|default(0) }} × ₱{{ "%.2f"|format(item.unit_price|default(0)) }}</small>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {# Old format: Single product (backward compatibility) #}
+                                        {{ order.product_name|default('N/A') }}
+                                    {% endif %}
+                                </td>
+                            <td>
+                                {% if order_items %}
+                                    {% set total_qty = 0 %}
+                                    {% for item in order_items %}
+                                            {% set total_qty = total_qty + (item.quantity|default(0)|int) %}
+                                        {% endfor %}
+                                        {{ total_qty }}
+                                    {% else %}
+                                        {{ order.quantity|default(0) }}
+                                    {% endif %}
+                                </td>
+                                <td>₱{{ "%.2f"|format(order.total_price|default(0)) }}</td>
+                                <td>{{ order.payment_method|default('N/A') }}</td>
+                                <td>
+                                    {% set order_status = order.status|default('Pending') %}
+                                    {% set status_class = order_status|lower|replace(' ', '-') %}
+                                    <span class="status-badge status-{{ status_class }}">
+                                        {{ order_status }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <form action="{{ url_for('update_order_status', order_id=order.order_id|default('')) }}" method="POST" class="order-form">
+                                            <select name="status" onchange="this.form.submit()" style="padding: 5px; font-size: 12px;">
+                                                <option value="Pending" {% if (order.status|default('Pending')) == 'Pending' %}selected{% endif %}>Pending</option>
+                                                <option value="Processing" {% if (order.status|default('Pending')) == 'Processing' %}selected{% endif %}>Processing</option>
+                                                <option value="Shipped" {% if (order.status|default('Pending')) == 'Shipped' %}selected{% endif %}>Shipped</option>
+                                                <option value="Delivered" {% if (order.status|default('Pending')) == 'Delivered' %}selected{% endif %}>Delivered</option>
+                                                <option value="Cancelled" {% if (order.status|default('Pending')) == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                                            </select>
+                                        </form>
+                                        <form action="{{ url_for('delete_order', order_id=order.order_id|default('')) }}" method="POST" class="order-form" onsubmit="return confirm('Are you sure you want to delete this order?');">
+                                            <button type="submit" class="btn btn-delete">Delete</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                            <td colspan="9" style="padding: 10px 15px; background: #f9f9f9; font-size: 12px;">
+                                <strong>Shipping Address:</strong> {{ order.shipping_address|default('') }}, {{ order.city|default('') }}, {{ order.postal_code|default('') }}
+                                {% if order_items %}
+                                <br><strong>Items:</strong> 
+                                {% for item in order_items %}
+                                        {{ item.product_name|default('Unknown') }} ({{ item.quantity|default(0) }}){% if not loop.last %}, {% endif %}
+                                    {% endfor %}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <div class="no-orders">
+                        <h3>No orders yet</h3>
+                        <p>Orders will appear here once customers place them.</p>
+                        {% if debug_info %}
+                        <p style="font-size: 12px; color: #999; margin-top: 10px;">Debug: orders list is empty (length: 0) | File: {{ debug_info.orders_file }}</p>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                {% else %}
+                <div class="no-orders">
+                    <h3>Error loading orders</h3>
+                    <p>Unable to load orders. Please check the server logs.</p>
+                    {% if debug_info %}
+                    <p style="font-size: 12px; color: #999; margin-top: 10px;">
+                        Debug:<br>
+                        Orders file: {{ debug_info.orders_file }}<br>
+                        Exists: {{ 'Yes' if debug_info.orders_file_exists else 'No' }}<br>
+                        Working dir: {{ debug_info.cwd }}<br>
+                        Orders loaded: {{ debug_info.orders_count }}
+                    </p>
+                    {% else %}
+                    <p style="font-size: 12px; color: #999; margin-top: 10px;">No debug info available.</p>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2025 Soothing Bar Shop. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+

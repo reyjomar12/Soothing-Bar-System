@@ -1,0 +1,20 @@
+[
+  {
+    "username": "ree",
+    "email": "ree@mail.com",
+    "password": "ree",
+    "created_at": "2025-11-07 15:34:21"
+  },
+  {
+    "username": "reee",
+    "email": "reee@mail.com",
+    "password": "reee",
+    "created_at": "2025-11-07 15:58:48"
+  },
+  {
+    "username": "err",
+    "email": "err@mail.com",
+    "password": "err",
+    "created_at": "2025-11-07 16:11:12"
+  }
+]

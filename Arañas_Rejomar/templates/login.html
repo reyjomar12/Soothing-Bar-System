@@ -8,7 +8,7 @@
 </head>
 <body>
     <header>
-        <img src="{{ url_for('static', filename='images/logo.jfif') }}" alt="SoapySoap Logo">
+        <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Soothing Bar Logo">
         <h1>Login to Soothing Bar</h1>
     </header>
     <nav>
@@ -20,6 +20,12 @@
     </nav>
     <div class="container">
         <form action="{{ url_for('login') }}" method="POST">
+            {% if error %}
+            <div class="error" style="color: red; margin-bottom: 15px; padding: 10px; background: #ffe6e6; border-radius: 5px;">
+                {{ error }}
+            </div>
+            {% endif %}
+            <p style="color: #666; margin-bottom: 20px;"><strong>Login Required</strong> - You must login to purchase products. Admin users can access the dashboard.</p>
             <input type="text" name="username" placeholder="Username" required><br>
             <input type="password" name="password" placeholder="Password" required><br>
             <button type="submit">Log In</button>

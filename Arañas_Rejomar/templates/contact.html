@@ -8,15 +8,19 @@
 </head>
 <body>
     <header>
-        <img src="{{ url_for('static', filename='images/logo.jfif') }}" alt="SoapySoap Logo">
+        <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Soothing Bar Logo">
         <h1>Contact Soothing Bar</h1>
     </header>
     <nav>
         <a href="{{ url_for('home') }}">Home</a>
         <a href="{{ url_for('products') }}">Products</a>
         <a href="{{ url_for('contact') }}">Contact</a>
-        <a href="{{ url_for('signup') }}">Sign Up</a>
-        <a href="{{ url_for('login') }}">Log In</a>
+        {% if session.user_logged_in or session.admin_logged_in %}
+            <a href="{{ url_for('logout') }}">Logout ({{ session.username }})</a>
+        {% else %}
+            <a href="{{ url_for('signup') }}">Sign Up</a>
+            <a href="{{ url_for('login') }}">Log In</a>
+        {% endif %}
     </nav>
     <div class="container">
         <h2>Get in Touch</h2>

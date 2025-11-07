@@ -1,0 +1,165 @@
+[
+  {
+    "order_id": "ORD-20251107144512",
+    "product_id": "soapy",
+    "product_name": "Soapy Soap",
+    "quantity": 5,
+    "unit_price": 15.0,
+    "total_price": 75.0,
+    "customer_name": "rey",
+    "email": "rey@mail.com",
+    "phone": "12321321",
+    "shipping_address": "321321",
+    "city": "321321",
+    "postal_code": "3213",
+    "payment_method": "Cash on Delivery",
+    "order_date": "2025-11-07 14:45:12",
+    "status": "Processing"
+  },
+  {
+    "order_id": "ORD-20251107151538",
+    "items": [
+      {
+        "product_id": "soapy",
+        "product_name": "Soapy Soap",
+        "quantity": 2,
+        "unit_price": 15.0,
+        "total_price": 30.0
+      }
+    ],
+    "total_price": 30.0,
+    "customer_name": "ree",
+    "email": "ree@mail.com",
+    "phone": "rey",
+    "shipping_address": "rey",
+    "city": "rey",
+    "postal_code": "rey",
+    "payment_method": "Cash on Delivery",
+    "order_date": "2025-11-07 15:15:38",
+    "status": "Pending"
+  },
+  {
+    "order_id": "ORD-20251107151552",
+    "items": [
+      {
+        "product_id": "soapy",
+        "product_name": "Soapy Soap",
+        "quantity": 2,
+        "unit_price": 15.0,
+        "total_price": 30.0
+      }
+    ],
+    "total_price": 30.0,
+    "customer_name": "ree",
+    "email": "ree@mail.com",
+    "phone": "rey",
+    "shipping_address": "rey",
+    "city": "rey",
+    "postal_code": "rey",
+    "payment_method": "Cash on Delivery",
+    "order_date": "2025-11-07 15:15:52",
+    "status": "Pending"
+  },
+  {
+    "order_id": "ORD-20251107151736",
+    "items": [
+      {
+        "product_id": "soapy",
+        "product_name": "Soapy Soap",
+        "quantity": 2,
+        "unit_price": 15.0,
+        "total_price": 30.0
+      }
+    ],
+    "total_price": 30.0,
+    "customer_name": "ree",
+    "email": "ree@mail.com",
+    "phone": "rey",
+    "shipping_address": "rey",
+    "city": "rey",
+    "postal_code": "rey",
+    "payment_method": "Cash on Delivery",
+    "order_date": "2025-11-07 15:17:36",
+    "status": "Pending"
+  },
+  {
+    "order_id": "ORD-20251107152839",
+    "items": [
+      {
+        "product_id": "malunggay",
+        "product_name": "Malunggay Soap",
+        "quantity": 1,
+        "unit_price": 10.0,
+        "total_price": 10.0
+      }
+    ],
+    "total_price": 10.0,
+    "customer_name": "ree",
+    "email": "ree@mail.com",
+    "phone": "re",
+    "shipping_address": "re",
+    "city": "re",
+    "postal_code": "re",
+    "payment_method": "Cash on Delivery",
+    "order_date": "2025-11-07 15:28:39",
+    "status": "Pending"
+  },
+  {
+    "order_id": "ORD-20251107153010",
+    "items": [
+      {
+        "product_id": "lavender",
+        "product_name": "Lavender Bliss",
+        "quantity": 1,
+        "unit_price": 20.0,
+        "total_price": 20.0
+      },
+      {
+        "product_id": "malunggay",
+        "product_name": "Malunggay Soap",
+        "quantity": 1,
+        "unit_price": 10.0,
+        "total_price": 10.0
+      },
+      {
+        "product_id": "soapy",
+        "product_name": "Soapy Soap",
+        "quantity": 1,
+        "unit_price": 15.0,
+        "total_price": 15.0
+      }
+    ],
+    "total_price": 45.0,
+    "customer_name": "ree",
+    "email": "ree@mail.com",
+    "phone": "1321",
+    "shipping_address": "321",
+    "city": "321",
+    "postal_code": "3213",
+    "payment_method": "Cash on Delivery",
+    "order_date": "2025-11-07 15:30:10",
+    "status": "Pending"
+  },
+  {
+    "order_id": "ORD-20251107153158",
+    "items": [
+      {
+        "product_id": "soapy",
+        "product_name": "Soapy Soap",
+        "quantity": 1,
+        "unit_price": 15.0,
+        "total_price": 15.0
+      }
+    ],
+    "total_price": 15.0,
+    "customer_name": "ree",
+    "email": "ree@mail.com",
+    "phone": "1321",
+    "shipping_address": "321321",
+    "city": "321321",
+    "postal_code": "321321",
+    "payment_method": "Cash on Delivery",
+    "order_date": "2025-11-07 15:31:58",
+    "status": "Pending"
+  }
+]
